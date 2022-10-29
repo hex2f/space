@@ -44,7 +44,7 @@ function CurrentPlaying({music}: {
   }, [supabase])
 
   return (
-    <div className={'relative aspect-square flex-1 h-full bg-slate-50'}>
+    <div className={'relative aspect-square flex-1 h-full bg-slate-50 overflow-hidden rounded'}>
       {playingStack.length > 0 && (
         playingStack.sort((a,b) => playingStack.indexOf(a) - playingStack.indexOf(b)).map((playing, i) => (
           <FadingInAlbumCover key={playing.title} i={i} playing={playing} />
@@ -67,7 +67,7 @@ function FadingInAlbumCover({ playing, i }: { playing: Music, i: number }) {
   const [loaded, setLoaded] = useState(false)
   return (
     <div className={`absolute top-0 left-0 aspect-square flex-1 h-full w-full translate-opacity duration-500 overflow-hidden ${loaded ? 'opacity-100' : 'opacity-0'} group`} style={{ zIndex: i }}>
-      <Image alt={`${playing.title} by ${playing.artist}`} className={`z-0 rounded h-full w-full duration-500 transition-all ${loaded ? 'scale-100 blur-0' : 'scale-110 blur-sm'}`} width={600} height={600} src={playing.cover_url} onLoadingComplete={() => setLoaded(true)} />
+      <Image alt={`${playing.title} by ${playing.artist}`} className={`z-0 h-full w-full duration-500 transition-all ${loaded ? 'scale-100 blur-0' : 'scale-110 blur-sm'}`} width={600} height={600} src={playing.cover_url} onLoadingComplete={() => setLoaded(true)} />
       <PopBar small={playing.artist} large={playing.title} />
     </div>
   )
@@ -77,8 +77,8 @@ function FadingInAlbumCover({ playing, i }: { playing: Music, i: number }) {
 function Location({ location }: { location: { city: string, country: string } }) {
   const [loaded, setLoaded] = useState(false)
   return (
-    <div className="aspect-square flex-1 h-full relative overflow-hidden group bg-slate-50">
-      <Image alt={'map'} className={`h-full z-0 rounded ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} transform-gpu transition duration-700`} width={600} height={600} src={'/api/map-image'} onLoadingComplete={() => setLoaded(true)} />
+    <div className="aspect-square flex-1 h-full relative overflow-hidden group bg-slate-50 rounded">
+      <Image alt={'map'} className={`h-full z-0 ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} transform-gpu transition duration-700`} width={600} height={600} src={'/api/map-image'} onLoadingComplete={() => setLoaded(true)} />
       {/* <span className="absolute top-1/2 left-1/2 text-3xl -translate-x-1/2 -translate-y-1/2" style={{ filter: 'drop-shadow(0 0 0.3rem rgba(0,0,0,0.2))' }}>👩🏼‍💻</span> */}
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full h-6 w-6 shadow ${loaded ? 'scale-100 opacity-100' : 'scale-50 opacity-0'} transform-gpu transition duration-700`}>
         <div className={`absolute top-1 left-1 bg-[#4E80EE] h-4 w-4 rounded-full ${loaded ? 'scale-100' : 'scale-0'} transition delay-300 duration-500`}></div>
@@ -91,8 +91,8 @@ function Location({ location }: { location: { city: string, country: string } })
 function ImageOfTheDay({ image }: { image: { url: string, title: string, description: string } }) {
   const [loaded, setLoaded] = useState(false)
   return (
-    <div className={`w-full object-fill relative group bg-slate-50 overflow-hidden`} style={{ aspectRatio: '3/5' }}>
-      <Image alt={'image of the day'} className={`h-full rounded ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} delay-300 transform-gpu transition duration-700`} width={900} height={1500} src={image.url} layout='fill' objectFit='fill' onLoadingComplete={() => setLoaded(true)} />
+    <div className={`w-full object-fill relative group bg-slate-50 overflow-hidden rounded`} style={{ aspectRatio: '3/5' }}>
+      <Image alt={'image of the day'} className={`h-full ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} delay-300 transform-gpu transition duration-700`} width={900} height={1500} src={image.url} layout='fill' objectFit='fill' onLoadingComplete={() => setLoaded(true)} />
       <PopBar small={image.description} large={''} />
     </div>
   )
