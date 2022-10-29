@@ -91,7 +91,7 @@ function Location({ location }: { location: { city: string, country: string } })
 function ImageOfTheDay({ image }: { image: { url: string, title: string, description: string } }) {
   const [loaded, setLoaded] = useState(false)
   return (
-    <div className={`w-full object-fill relative group bg-slate-50`} style={{ aspectRatio: '3/5' }}>
+    <div className={`w-full object-fill relative group bg-slate-50 overflow-hidden`} style={{ aspectRatio: '3/5' }}>
       <Image alt={'image of the day'} className={`h-full rounded ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} delay-300 transform-gpu transition duration-700`} width={900} height={1500} src={image.url} layout='fill' objectFit='fill' onLoadingComplete={() => setLoaded(true)} />
       <PopBar small={image.description} large={''} />
     </div>
