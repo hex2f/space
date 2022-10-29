@@ -1,0 +1,17 @@
+.jitter {
+  animation: jitter 0.5s linear infinite;
+}
+
+@keyframes jitter {
+  0% { transform: translate(0rem, 0rem); }
+  10% { transform: translate(0.05rem, 0.2rem); }
+  20% { transform: translate(0.02rem, 0.06rem); }
+  30% { transform: translate(-0.02rem, -0.02rem); }
+  40% { transform: translate(-0.1rem, 0.02rem); }
+  50% { transform: translate(0.2rem, -0.05rem); }
+  60% { transform: translate(-0.03rem, 0.1rem); }
+  70% { transform: translate(0.06rem, -0.08rem); }
+  80% { transform: translate(-0.3rem, 0.3rem); }
+  90% { transform: translate(0.06rem, -0.04rem); }
+  100% { transform: translate(0rem, 0rem); }
+}
