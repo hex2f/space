@@ -44,7 +44,7 @@ function CurrentPlaying({music}: {
   }, [supabase])
 
   return (
-    <div className={'relative aspect-square flex-1 h-full'}>
+    <div className={'relative aspect-square flex-1 h-full bg-slate-50'}>
       {playingStack.length > 0 && (
         playingStack.sort((a,b) => playingStack.indexOf(a) - playingStack.indexOf(b)).map((playing, i) => (
           <FadingInAlbumCover key={playing.title} i={i} playing={playing} />
@@ -77,13 +77,23 @@ function FadingInAlbumCover({ playing, i }: { playing: Music, i: number }) {
 function Location({ location }: { location: { city: string, country: string } }) {
   const [loaded, setLoaded] = useState(false)
   return (
-    <div className="aspect-square flex-1 h-full relative overflow-hidden group">
+    <div className="aspect-square flex-1 h-full relative overflow-hidden group bg-slate-50">
       <Image alt={'map'} className={`h-full z-0 rounded ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} transform-gpu transition duration-700`} width={600} height={600} src={'/api/map-image'} onLoadingComplete={() => setLoaded(true)} />
       {/* <span className="absolute top-1/2 left-1/2 text-3xl -translate-x-1/2 -translate-y-1/2" style={{ filter: 'drop-shadow(0 0 0.3rem rgba(0,0,0,0.2))' }}>👩🏼‍💻</span> */}
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full h-6 w-6 shadow ${loaded ? 'scale-100 opacity-100' : 'scale-50 opacity-0'} transform-gpu transition duration-700`}>
         <div className={`absolute top-1 left-1 bg-[#4E80EE] h-4 w-4 rounded-full ${loaded ? 'scale-100' : 'scale-0'} transition delay-300 duration-500`}></div>
       </div>
       <PopBar small={location.country} large={location.city} />
+    </div>
+  )
+}
+
+function ImageOfTheDay({ image }: { image: { url: string, title: string, description: string } }) {
+  const [loaded, setLoaded] = useState(false)
+  return (
+    <div className={`w-full object-fill relative group bg-slate-50`} style={{ aspectRatio: '3/5' }}>
+      <Image alt={'image of the day'} className={`h-full rounded ${loaded ? 'scale-100 opacity-100 blur-0' : 'scale-110 opacity-0 blur-md'} delay-300 transform-gpu transition duration-700`} width={900} height={1500} src={image.url} layout='fill' objectFit='fill' onLoadingComplete={() => setLoaded(true)} />
+      <PopBar small={image.description} large={''} />
     </div>
   )
 }
@@ -117,12 +127,7 @@ const Index: NextPage<{
         </div>
         <div className='flex gap-2 mt-4'>
           <div className={'flex-[4]'}>
-            <div className="w-full object-fill relative" style={{ aspectRatio: '3/5' }}>
-              {/* <div className="pointer-events-none absolute top-1 left-0 blur-lg brightness-125 saturate-150 opacity-50">
-                <Image alt={'image of the day'} className="h-full z-0" width={900} height={1500} src={'https://picsum.photos/900/1500'}/>
-              </div> */}
-              <Image alt={'image of the day'} className="h-full z-10 rounded" width={900} height={1500} src={'https://picsum.photos/900/1500'} layout='fill' objectFit='fill'/>
-            </div>
+            <ImageOfTheDay image={{ url:'https://picsum.photos/900/1500', title: 'Image of the day', description: 'This is a random image at the moment. The idea is to start taking lots of images again and slapping them on here :)'}} />
           </div>
 
           <div className='flex-[5] flex flex-col gap-4'>
