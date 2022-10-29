@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await supabase
         .from('music')
         .insert({ cover_hash, artist, album, title })
-    }, 2500)
+    }, 5000)
 
     const { data } = await supabase
       .storage
